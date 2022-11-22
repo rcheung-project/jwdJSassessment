@@ -1,0 +1,11 @@
+h2 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: coral;
+}
+ul {
+    font-weight: bold;
+    background-color: rgba(33, 199, 199, 0.877);
+}
+li {
+    color: rgb(35, 73, 201);
+}

@@ -44,6 +44,16 @@ window.addEventListener('DOMContentLoaded', () => {
       o: ['Sydney', 'Canberra', 'Melbourne', 'Perth'],
       a: 1,
     },
+    {
+      q: 'Which animal can be found in Coomonwealth coat of arms?',
+      o: ['Koala', 'Horse', 'Emu', 'Eagle'],
+      a: 2,
+    },
+    {
+      q: 'How many legs does a spider have?',
+      o: ['6', '12', '7', '8'],
+      a: 3,
+    },
   ];
 
   // function to Display the quiz questions and answers from the object
@@ -63,28 +73,72 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // Calculate the score
-  const calculateScore = () => {
-    let score = 0;
-    quizArray.map((quizItem, index) => {
-      for (let i = 0; i < 4; i++) {
-        //highlight the li if it is the correct answer
-        let li = `li_${index}_${i}`;
-        let r = `radio_${index}_${i}`;
-        liElement = document.querySelector('#' + li);
-        radioElement = document.querySelector('#' + r);
+const sBtn = document.getElementById('btnSubmit');
+const counting = document.getElementById('time');
+const btnReset = document.getElementById('btnReset');
+sBtn.addEventListener('click', calculateScore);
 
+
+ // Calculate the score
+ function calculateScore() {
+  let score = 0;
+//  setTimeout(() => {
+    
+  quizArray.map((quizItem, index) => {
+    for (let i = 0; i < 4; i++) {
+      //highlight the li if it is the correct answer
+      let li = `li_${index}_${i}`;
+      let r = `radio_${index}_${i}`;
+      liElement = document.querySelector('#' + li);
+      radioElement = document.querySelector('#' + r);
+
+      if (quizItem.a == i) {
+        //change background color of li element here
+      }
+
+      if (radioElement.checked) {
+        // code for task 1 goes here
         if (quizItem.a == i) {
-          //change background color of li element here
-        }
-
-        if (radioElement.checked) {
-          // code for task 1 goes here
+            score++;
         }
       }
-    });
-  };
+    }
+//      const goTo = quizItem[0].a;
+//    console.log(quizItem.o[1]);   
+    const totalScore = document.getElementById('score');
+    const nextHTML = 'Your total score is  '+ score;
+    totalScore.innerHTML = nextHTML;
+  });
+};
 
-  // call the displayQuiz function
-  displayQuiz();
+// call the displayQuiz function
+displayQuiz();
 });
+
+// reload page when reset button is clicked
+btnReset.onclick = ()=>{
+  window.location.reload(); 
+}
+
+// set a timer to count down for the quiz
+function startTimer(howLong, display) {
+  var timer = howLong, minutes, seconds;
+  setInterval(function () {
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      display.textContent = minutes + ":" + seconds;
+      if (--timer < 0) {
+          timer = howLong;
+          totalScore.innerHTML = score;
+      }
+  }, 1000);
+}
+
+window.onload = function () {
+  var aMin = 60,
+      display = document.querySelector('#time');
+  startTimer(aMin, display);
+};
+
